@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
     public PlayerController player;
+    float targetRatio = 16f / 9f;
 
     private Vector3 lastPlayerPosition;
     private float distanceToMove;
@@ -13,7 +14,8 @@ public class CameraController : MonoBehaviour {
     {
         player = FindObjectOfType<PlayerController>();
         lastPlayerPosition = player.transform.position;
-
+        Camera myCam = GetComponent<Camera>();
+        myCam.aspect = targetRatio;
     }
 
     // Update is called once per frame
