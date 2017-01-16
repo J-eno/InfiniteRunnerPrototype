@@ -5,10 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     //player movement variables
-    public float movespeed = 2;
+    public float movespeed;
+    public float speedMultiplier;
+    private float speedMilestoneCount;
+    public float speedIncreaseMilestone;
     public float jumpForce = 8;
     public bool grounded;
     public LayerMask whatIsGround;
+    public bool isSliding = false;
 
     //Touch Screen variables
     private float maxTime = 0.5f;
@@ -23,18 +27,42 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D playerRB;
     private Collider2D playerCol;
+    private BoxCollider2D playerBox;
 
-	// Use this for initialization
-	void Start ()
+    private float normSize = 0.85f;
+    private float slideSize;
+    Vector2 bcSize;
+
+    public Sprite[] sprites;
+    SpriteRenderer spriteRenderer;
+
+
+    // Use this for initialization
+    void Start ()
     {
         playerRB = GetComponent<Rigidbody2D>();
         playerCol = GetComponent<Collider2D>();
+        playerBox = GetComponent<BoxCollider2D>();
+  
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprites[0];
+        slideSize = normSize / 2;
+        bcSize = playerBox.size;
+        speedMilestoneCount = 80;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         grounded = Physics2D.IsTouchingLayers(playerCol, whatIsGround);
+
+        if(transform.position.x > speedMilestoneCount)
+        {
+            speedMilestoneCount += speedIncreaseMilestone;
+            speedIncreaseMilestone *= speedMultiplier;
+            movespeed *= speedMultiplier;
+        }
+
         playerRB.velocity = new Vector2(movespeed, playerRB.velocity.y);
 
         if (Input.touchCount > 0)
@@ -59,18 +87,6 @@ public class PlayerController : MonoBehaviour {
             }
             else if (touch.phase == TouchPhase.Ended)
             {
-                /*
-                endTime = Time.time;
-                endPos = touch.position;
-
-                swipeDistance = (endPos - startPos).magnitude;
-                swipeTime = (endTime - startTime);
-
-                if (swipeTime < maxTime && swipeDistance > minSwipeDistance)
-                {
-                    Swipe();
-                }
-                */
                 touch = new Touch();
             }
         }
@@ -83,7 +99,10 @@ public class PlayerController : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             DownActions();
+            
         }
+
+        
 	}
 
     void Jump()
@@ -96,16 +115,30 @@ public class PlayerController : MonoBehaviour {
 
     void DownActions()
     {
-        if (grounded)
+        if (grounded && !isSliding)
         {
-            //playerRB.velocity = new Vector2(playerRB.velocity.x, jumpForce);
+            StartCoroutine(Slide());
         }
+     
         else
-        {
+        { 
             playerRB.velocity = new Vector2(playerRB.velocity.x, -jumpForce * 2);
+            StartCoroutine(Slide());
         }
     }
 
+    IEnumerator Slide()
+    {
+        isSliding = true;
+        spriteRenderer.sprite = sprites[1];
+        bcSize.y = slideSize;
+        playerBox.size = bcSize;
+        yield return new WaitForSeconds(0.5f);
+        spriteRenderer.sprite = sprites[0];
+        bcSize.y = normSize;
+        playerBox.size = bcSize;
+        isSliding = false;
+    }
     void Swipe()
     {
         Vector2 distance = endPos - startPos;

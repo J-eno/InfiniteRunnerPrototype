@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4322588264921156}
   - component: {fileID: 212621800306977426}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_1 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4198241612573030}
   - component: {fileID: 212378288686988774}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_1 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4299859633187974}
   - component: {fileID: 212770998477632856}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4278435849062988}
   - component: {fileID: 212818710447922240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4060629167512542}
   - component: {fileID: 212936250560782034}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4763924804933580}
   - component: {fileID: 212439186028925104}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4634721116275494}
   - component: {fileID: 212227477316566748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4069634632095400}
   - component: {fileID: 212708178299884628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platforms_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 3.5, y: 0}
   serializedVersion: 2
-  m_Size: {x: 8, y: 1}
+  m_Size: {x: 8, y: 0.5}
 --- !u!114 &114567567986238094
 MonoBehaviour:
   m_ObjectHideFlags: 1

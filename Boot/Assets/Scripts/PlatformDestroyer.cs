@@ -17,8 +17,15 @@ public class PlatformDestroyer : MonoBehaviour {
     {
         if (transform.position.x < destructionPoint.transform.position.x)
         {
-            //Destroy(gameObject);
-            gameObject.SetActive(false);
+            if(gameObject.tag == "StarterPlat")
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+            
         }	
 	}
 }

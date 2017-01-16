@@ -7,10 +7,11 @@ public class PlatformGenerator : MonoBehaviour {
     public GameObject thePlatform;
     public Transform generationPoint;
     private float platformWidth;
-    public PlatformPooler thePlatformPool;
+    public ObjectPooler thePlatformPool;
 
+    public ObjectPooler theObstaclePool;
     public float randomObstacleThreshold;
-    public ObstaclePooler theObstaclePool;
+    
 
     float padding = 1f;
 
@@ -18,7 +19,7 @@ public class PlatformGenerator : MonoBehaviour {
 	void Start ()
     {
         platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
-        randomObstacleThreshold = 75;
+        randomObstacleThreshold = 65;
     }
 	
 	// Update is called once per frame
@@ -26,22 +27,33 @@ public class PlatformGenerator : MonoBehaviour {
     {
         if (transform.position.x < generationPoint.position.x)
         {
-            transform.position = new Vector3(transform.position.x + platformWidth, transform.position.y, transform.position.z);
-            //Instantiate(platformsArray[platformToSpawn], transform.position, transform.rotation);
-            GameObject newPlatform = thePlatformPool.GetPooledObject();
-            newPlatform.transform.position = transform.position;
-            newPlatform.transform.rotation = transform.rotation;
-            newPlatform.SetActive(true);
 
-            if (Random.Range(0f, 100f) < randomObstacleThreshold)
-            {
-                GameObject newObstacle = theObstaclePool.GetPooledObject();
-                float obstacleXPos = Random.Range((-platformWidth / 2) + padding, (platformWidth / 2) - padding);
-                Vector3 obstaclePosition = new Vector3(obstacleXPos, 0f, 0f);
-                newObstacle.transform.position = transform.position + obstaclePosition;
-                newObstacle.transform.rotation = transform.rotation;
-                newObstacle.SetActive(true);
-            }
+            SpawnPlatforms();
+            SpawnObstacles();
+           
         }	
 	}
+
+    void SpawnPlatforms()
+    {
+        transform.position = new Vector3(transform.position.x + platformWidth, transform.position.y, transform.position.z);
+        //Instantiate(platformsArray[platformToSpawn], transform.position, transform.rotation);
+        GameObject newPlatform = thePlatformPool.GetPooledObject();
+        newPlatform.transform.position = transform.position;
+        newPlatform.transform.rotation = transform.rotation;
+        newPlatform.SetActive(true);
+    }
+
+    void SpawnObstacles()
+    {
+        if (Random.Range(0f, 100f) < randomObstacleThreshold)
+        {
+            GameObject newObstacle = theObstaclePool.GetPooledObject();
+            float obstacleXPos = Random.Range((-platformWidth / 2) + padding, (platformWidth / 2) - padding);
+            Vector3 obstaclePosition = new Vector3(obstacleXPos, 0f, 0f);
+            newObstacle.transform.position = transform.position + obstaclePosition;
+            newObstacle.transform.rotation = transform.rotation;
+            newObstacle.SetActive(true);
+        }
+    }
 }
